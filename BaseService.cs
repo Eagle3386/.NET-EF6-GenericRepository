@@ -19,6 +19,7 @@ namespace com.yourapp.data.services
         {
             _context = context;
         }
+
         /// <summary>
         /// Returns a single object with a primary key of the provided id
         /// </summary>
@@ -29,6 +30,7 @@ namespace com.yourapp.data.services
         {
             return _context.Set<TObject>().Find(id);
         }
+
         /// <summary>
         /// Returns a single object with a primary key of the provided id
         /// </summary>
@@ -39,24 +41,27 @@ namespace com.yourapp.data.services
         {
             return await _context.Set<TObject>().FindAsync(id);
         }
+
         /// <summary>
-        /// Gets a collection of all objects in the database
+        /// Gets a queryable of all objects in the database
         /// </summary>
         /// <remarks>Synchronous</remarks>
-        /// <returns>An ICollection of every object in the database</returns>
-        public ICollection<TObject> GetAll()
+        /// <returns>An IQueryable of every object in the database</returns>
+        public IQueryable<TObject> GetAll()
         {
-            return _context.Set<TObject>().ToList();
+            return _context.Set<TObject>();
         }
+
         /// <summary>
-        /// Gets a collection of all objects in the database
+        /// Gets a queryable of all objects in the database
         /// </summary>
         /// <remarks>Asynchronous</remarks>
-        /// <returns>An ICollection of every object in the database</returns>
-        public async Task<ICollection<TObject>> GetAllAsync()
+        /// <returns>An IQueryable of every object in the database</returns>
+        public async Task<IQueryable<TObject>> GetAllAsync()
         {
-            return await _context.Set<TObject>().ToListAsync();
+            return await _context.Set<TObject>();
         }
+
         /// <summary>
         /// Returns a single object which matches the provided expression
         /// </summary>
@@ -68,6 +73,7 @@ namespace com.yourapp.data.services
         {
             return _context.Set<TObject>().SingleOrDefault(match);
         }
+
         /// <summary>
         /// Returns a single object which matches the provided expression
         /// </summary>
@@ -79,26 +85,29 @@ namespace com.yourapp.data.services
         {
             return await _context.Set<TObject>().SingleOrDefaultAsync(match);
         }
+
         /// <summary>
-        /// Returns a collection of objects which match the provided expression
+        /// Returns a queryable which matches the provided expression
         /// </summary>
         /// <remarks>Synchronous</remarks>
         /// <param name="match">A linq expression filter to find one or more results</param>
-        /// <returns>An ICollection of object which match the expression filter</returns>
-        public ICollection<TObject> FindAll(Expression<Func<TObject, bool>> match)
+        /// <returns>An IQueryable of object which match the expression filter</returns>
+        public IQueryable<TObject> FindAll(Expression<Func<TObject, bool>> match)
         {
-            return _context.Set<TObject>().Where(match).ToList();
+            return _context.Set<TObject>().Where(match);
         }
+
         /// <summary>
-        /// Returns a collection of objects which match the provided expression
+        /// Returns a queryable which matches the provided expression
         /// </summary>
         /// <remarks>Asynchronous</remarks>
         /// <param name="match">A linq expression filter to find one or more results</param>
-        /// <returns>An ICollection of object which match the expression filter</returns>
-        public async Task<ICollection<TObject>> FindAllAsync(Expression<Func<TObject, bool>> match)
+        /// <returns>An IQueryable of object which match the expression filter</returns>
+        public async Task<IQueryable<TObject>> FindAllAsync(Expression<Func<TObject, bool>> match)
         {
-            return await _context.Set<TObject>().Where(match).ToListAsync();
+            return await _context.Set<TObject>().Where(match);
         }
+
         /// <summary>
         /// Inserts a single object to the database and commits the change
         /// </summary>
@@ -109,8 +118,10 @@ namespace com.yourapp.data.services
         {
             _context.Set<TObject>().Add(t);
             _context.SaveChanges();
+
             return t;
         }
+
         /// <summary>
         /// Inserts a single object to the database and commits the change
         /// </summary>
@@ -121,8 +132,10 @@ namespace com.yourapp.data.services
         {
             _context.Set<TObject>().Add(t);
             await _context.SaveChangesAsync();
+
             return t;
         }
+
         /// <summary>
         /// Inserts a collection of objects into the database and commits the changes
         /// </summary>
@@ -133,8 +146,10 @@ namespace com.yourapp.data.services
         {
             _context.Set<TObject>().AddRange(tList);
             _context.SaveChanges();
+
             return tList;
         }
+
         /// <summary>
         /// Inserts a collection of objects into the database and commits the changes
         /// </summary>
@@ -145,8 +160,10 @@ namespace com.yourapp.data.services
         {
             _context.Set<TObject>().AddRange(tList);
             await _context.SaveChangesAsync();
+
             return tList;
         }
+
         /// <summary>
         /// Updates a single object by finding it within the context and committing the change
         /// </summary>
@@ -163,6 +180,7 @@ namespace com.yourapp.data.services
 
             return updated;
         }
+
         /// <summary>
         /// Updates a single object by finding it within the context and committing the change
         /// </summary>
@@ -179,6 +197,7 @@ namespace com.yourapp.data.services
 
             return updated;
         }
+
         /// <summary>
         /// Deletes a single object from the database and commits the change
         /// </summary>
@@ -189,6 +208,7 @@ namespace com.yourapp.data.services
             _context.Set<TObject>().Remove(t);
             _context.SaveChanges();
         }
+
         /// <summary>
         /// Deletes a single object from the database and commits the change
         /// </summary>
@@ -197,9 +217,10 @@ namespace com.yourapp.data.services
         public async Task<int> DeleteAsync(TObject t)
         {
             _context.Set<TObject>().Remove(t);
+
             return await _context.SaveChangesAsync();
         }
-        
+
         /// <summary>
         /// Gets the count of the number of objects in the databse
         /// </summary>
@@ -209,6 +230,7 @@ namespace com.yourapp.data.services
         {
             return _context.Set<TObject>().Count();
         }
+
         /// <summary>
         /// Gets the count of the number of objects in the databse
         /// </summary>
