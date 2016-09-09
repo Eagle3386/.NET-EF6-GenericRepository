@@ -148,44 +148,36 @@ namespace com.yourapp.data.services
             return tList;
         }
         /// <summary>
-        /// Updates a single object based on the provided primary key and commits the change
+        /// Updates a single object by finding it within the context and committing the change
         /// </summary>
         /// <remarks>Synchronous</remarks>
         /// <param name="updated">The updated object to apply to the database</param>
-        /// <param name="key">The primary key of the object to update</param>
         /// <returns>The resulting updated object</returns>
-        public TObject Update(TObject updated, int key)
+        public TObject Update(TObject updated)
         {
             if (updated == null)
                 return null;
 
-            TObject existing = _context.Set<TObject>().Find(key);
-            if (existing != null)
-            {
-                _context.Entry(existing).CurrentValues.SetValues(updated);
-                _context.SaveChanges();
-            }
-            return existing;
+            _context.Entry(updated).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return updated;
         }
         /// <summary>
-        /// Updates a single object based on the provided primary key and commits the change
+        /// Updates a single object by finding it within the context and committing the change
         /// </summary>
         /// <remarks>Asynchronous</remarks>
         /// <param name="updated">The updated object to apply to the database</param>
-        /// <param name="key">The primary key of the object to update</param>
         /// <returns>The resulting updated object</returns>
-        public async Task<TObject> UpdateAsync(TObject updated, int key)
+        public async Task<TObject> UpdateAsync(TObject updated)
         {
             if (updated == null)
                 return null;
 
-            TObject existing = await _context.Set<TObject>().FindAsync(key);
-            if (existing != null)
-            {
-                _context.Entry(existing).CurrentValues.SetValues(updated);
-                await _context.SaveChangesAsync();
-            }
-            return existing;
+            _context.Entry(updated).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return updated;
         }
         /// <summary>
         /// Deletes a single object from the database and commits the change
